@@ -4,7 +4,9 @@ import React from 'react';
 function App() {
   const [textInput, setTextInput] = React.useState('Here is some example text.');
   const [conversionMode, setConversionMode] = React.useState('lowercase');
-  const [textOutput, setTextOutput] = React.useState('');
+  // moved message from handleSubmit to default state
+  const [textOutput, setTextOutput] = React.useState('Your formatted text will go here!');
+
 
   const handleRadioChange = event => {
     setConversionMode(event.target.value);
@@ -16,7 +18,12 @@ function App() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    setTextOutput('Your formatted text will go here!')
+    // check conversion mode on submit and change case accordingly
+    if(conversionMode === 'uppercase') {
+      setTextOutput(textInput.toUpperCase());
+    } else {
+      setTextOutput(textInput.toLowerCase());
+    }
   };
 
   return (
@@ -55,10 +62,12 @@ function App() {
           />
           <label htmlFor="conversion-1">Convert text to uppercase</label>
         </div>
-        <button type="button">Submit</button>
+        {/* changed btn type from 'button' to 'submit' */}
+        <button type="submit">Submit</button>
         <div className="form-control form-control__text u-mt-3">
           <label htmlFor="result">Converted text:</label>
-          <output id="result" class="result">{textOutput}</output>
+          {/* changed 'class' to 'className' in response to warning - still worked */}
+          <output id="result" className="result">{textOutput}</output>
         </div>
       </form>
     </div>
